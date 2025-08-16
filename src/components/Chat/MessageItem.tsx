@@ -10,8 +10,6 @@ interface MessageItemProps {
 export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
 	const isGenerating = message.isGenerating;
 
-	console.log('response ', message.response);
-
 	return (
 		<div className='space-y-4'>
 			<div className='flex justify-end'>
@@ -23,8 +21,8 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
 				<div className="loader">
 				</div>
 			) : (
-				<div>
-					<p className='px-3 py-2 bg-slate-100 rounded-xl'>
+				<div className='flex'>
+					<p className='md-content px-3 py-2 bg-slate-100 rounded-xl'>
 						<Markdown>
 							{message.response}
 						</Markdown>

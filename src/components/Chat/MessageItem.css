@@ -1,38 +1,74 @@
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin: 1em 0;
+/* Scope to your markdown container */
+.md-content {
+	line-height: 1.6;
 }
 
-th,
-td {
-	border: 1px solid #ccc;
-	padding: 0.5em 1em;
+/* Strong, visible rule with space above & below */
+.md-content hr {
+	border: 0;
+	border-top: 1px solid #e0e0e0;
+	/* visible line */
+	height: 0;
+	margin: 2rem 0;
+	/* space above & below the rule */
+	background: transparent;
+}
+
+/* Base spacing for headings (applies everywhere) */
+.md-content h1,
+.md-content h2,
+.md-content h3,
+.md-content h4,
+.md-content h5,
+.md-content h6 {
+	margin-top: 1.25rem;
+	margin-bottom: 0.6rem;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+/* Ensure extra space when a heading immediately follows an <hr> */
+.md-content hr+h1,
+.md-content hr+h2,
+.md-content hr+h3,
+.md-content hr+h4,
+.md-content hr+h5,
+.md-content hr+h6 {
+	margin-top: 1.75rem;
+	/* larger gap after the rule */
+}
+
+/* Ensure extra space when an <hr> immediately follows a heading */
+.md-content h1+hr,
+.md-content h2+hr,
+.md-content h3+hr,
+.md-content h4+hr,
+.md-content h5+hr,
+.md-content h6+hr {
+	margin-top: 1rem;
+	/* gap between heading and rule below it */
+}
+
+/* Optional: avoid collapsing margins in tricky layouts */
+.md-content>* {
+	/* creates a new block formatting context to avoid weird collapse */
+	overflow-wrap: anywhere;
+}
+
+/* Table styles (keeps your earlier table rules intact) */
+.md-content table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1.25rem 0;
+}
+
+.md-content th,
+.md-content td {
+	border: 1px solid #ddd;
+	padding: 0.5rem 0.75rem;
 	text-align: left;
 }
 
-th {
-	background-color: #f0f0f0;
-}
-
-/* App.css or global stylesheet */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin-top: 1.5em;
-	/* space above heading */
-	margin-bottom: 0.5em;
-	/* space below heading */
-	font-weight: 600;
-	/* optional: make headings bold */
-}
-
-/* Optional: add spacing between paragraphs and lists */
-p,
-ul,
-ol {
-	margin-bottom: 1em;
+.md-content th {
+	background: #f7f7f7;
 }

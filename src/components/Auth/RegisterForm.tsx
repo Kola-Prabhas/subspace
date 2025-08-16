@@ -16,11 +16,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
 	const [displayName, setDisplayName] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const { signUpEmailPassword, isLoading, error } = useSignUpEmailPassword();
-	const { sendEmail, isLoading: isPending, isSent, isError, error: isEmailError } = useSendVerificationEmail();
-
-	console.log('isEmailSending', isPending);
-	console.log('isSent ', isSent);
-	console.log('error', isEmailError);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -29,16 +24,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
 		});
 
 
-		if (res.needsEmailVerification) {
-			toast.promise(sendEmail(email),
-				{
-					loading: 'Sending Verification Email',
-					success: 'Verification Email Sent. Please check your spam folder if not found',
-					error: 'Error sending verification Email. Make sure you have entered correct email'
-				}
-			);
+		if (!error && res.needsEmailVerification) {
+			toast.success('Verification Email Sent. Please check your Spam Folder if not found',)
+
+			setEmail('');
+			setPassword('');
+			setDisplayName('');
 		}
-	};
+
+	}
 
 	return (
 		<div className="w-full max-w-md mx-auto">
@@ -58,6 +52,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
 							<input
 								type="text"
 								value={displayName}
+								disabled={isLoading}
 								onChange={(e) => setDisplayName(e.target.value)}
 								className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
 								placeholder="Enter your name"
@@ -74,6 +69,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
 							<input
 								type="email"
 								value={email}
+								disabled={isLoading}
 								onChange={(e) => setEmail(e.target.value)}
 								className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
 								placeholder="Enter your email"
@@ -91,6 +87,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
 							<input
 								type={showPassword ? 'text' : 'password'}
 								value={password}
+								disabled={isLoading}
 								onChange={(e) => setPassword(e.target.value)}
 								className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
 								placeholder="Create a password"
@@ -100,6 +97,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
+								disabled={isLoading}
 								className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
 							>
 								{showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
